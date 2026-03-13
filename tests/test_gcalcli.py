@@ -98,7 +98,8 @@ def test_cal_query(capsys, PatchedGCalI):
 def test_add_event(PatchedGCalI):
     cal_names = parse_cal_names(['jcrowgey@uw.edu'], printer=None)
     gcal = PatchedGCalI(
-            cal_names=cal_names, allday=False, default_reminders=True)
+            cal_names=cal_names, allday=False, meet=False,
+            default_reminders=True)
     assert gcal.AddEvent(title='test event',
                          where='anywhere',
                          start='now',
@@ -117,7 +118,8 @@ def test_add_event_with_cal_prompt(PatchedGCalI, capsys, monkeypatch):
     cal_names = parse_cal_names(
         ['jcrowgey@uw.edu', 'joshuacrowgey@gmail.com'], None)
     gcal = PatchedGCalI(
-            cal_names=cal_names, allday=False, default_reminders=True)
+            cal_names=cal_names, allday=False, meet=False,
+            default_reminders=True)
     # Fake selecting calendar 0 at the prompt
     monkeypatch.setattr('sys.stdin', io.StringIO('0\n'))
     assert gcal.AddEvent(title='test event',

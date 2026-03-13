@@ -653,6 +653,12 @@ def get_argument_parser():
         default=True,
         help='Don\'t prompt for missing data when adding events',
     )
+    add.add_argument(
+        '--meet',
+        action='store_true',
+        default=False,
+        help='Create Meet link',
+    )
 
     _import = sub.add_parser(
         'import',

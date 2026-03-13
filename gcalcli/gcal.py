@@ -13,6 +13,7 @@ import shutil
 import sys
 import textwrap
 import time
+import uuid
 from typing import Any, Iterable
 from unicodedata import east_asian_width
 
@@ -1491,9 +1492,14 @@ class GoogleCalendarInterface:
 
         event['attendees'] = list(map(lambda w: {'email': w}, who))
 
+        if self.options['meet']:
+            event['conferenceData'] = {'createRequest': {
+                'requestId': str(uuid.uuid4()),
+                'conferenceSolutionKey': {'type': 'hangoutsMeet'}}}
+
         event = self._add_reminders(event, reminders)
         events = self.get_events()
-        request = events.insert(calendarId=calendar['id'], body=event)
+        request = events.insert(calendarId=calendar['id'], body=event, conferenceDataVersion=1)
         new_event = self._retry_with_backoff(request)
 
         if self.details.get('url'):
