@@ -615,7 +615,8 @@ def get_argument_parser():
         default=[],
         type=str,
         action='append',
-        help='Event participant (may be provided multiple times)',
+        help='Event participant (may be provided multiple times). '
+        'Append "?" to mark as optional (e.g. user@example.com?).',
     )
     add.add_argument('--where', default=None, type=str, help='Event location')
     add.add_argument('--when', default=None, type=str, help='Event time')

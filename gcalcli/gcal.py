@@ -1490,7 +1490,13 @@ class GoogleCalendarInterface:
         if color:
             event['colorId'] = get_override_color_id(color)
 
-        event['attendees'] = list(map(lambda w: {'email': w}, who))
+        attendees = []
+        for w in who:
+            if w.endswith('?'):
+                attendees.append({'email': w[:-1], 'optional': True})
+            else:
+                attendees.append({'email': w})
+        event['attendees'] = attendees
 
         if self.options['meet']:
             event['conferenceData'] = {'createRequest': {
